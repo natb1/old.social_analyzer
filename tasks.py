@@ -28,7 +28,6 @@ def _respond(observable, from_address, to_address, smtp_server):
     msg['Subject'] = 'found indicator'
     msg['From'] = from_address
     msg['To'] = to_address
-    print(msg.as_string())
-    #s = smtplib.SMTP(smtp_server)
-    #s.sendmail(me, [you], msg.as_string())
-    #s.quit()
+    s = smtplib.SMTP(smtp_server)
+    s.sendmail(from_address, [to_address], msg.as_string())
+    s.quit()

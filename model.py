@@ -5,7 +5,7 @@ class Identity:
 
 class Observable:
 
-    def __init__(self, value, identity):
+    def __init__(self, value, attribution):
         self.value = value
-        self.attribution = identity
+        self.attribution = attribution
         
