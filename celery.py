@@ -5,7 +5,9 @@ from celery import Celery
 celery = Celery('social_analyzer.celery',
                 broker='amqp://',
                 backend='amqp://',
-                include=['social_analyzer.tasks'])
+                include=['social_analyzer.tasks',
+                         #TODO: include all social workflows
+                         'social_analyzer.social_workflows.twitter'])
 
 # Optional configuration, see the application user guide.
 celery.conf.update(

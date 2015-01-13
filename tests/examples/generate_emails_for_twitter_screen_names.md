@@ -1,7 +1,11 @@
 ```
 >>> twitter_screen_names
 ['Nathan', 'GhengisKhan', 'drEvil', 'MotherTeresa']
->>> queue_twitter_screen_names(twitter_screen_names)
+>>> import social_analyzer.workflows
+>>> social_analyzer.workflows.init_twitter_workflow(twitter_screen_names,
+...                                                 'nathan@natb1.com',
+...                                                 'role@example.com',
+...                                                 'smtp.example.com')
 Called smtplib.SMTP('localhost')
 Called smtp_connection.sendmail(
     'role@example.com',
