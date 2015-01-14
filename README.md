@@ -12,10 +12,6 @@ Given the following contraints:
 - must be distributable
 - all IO must be non-blocking
 
-## config
-Integration tests require local load time config. Config parameters can be
-found in config.py.
-
 ## social workflows
 Social workflows extend the way social_analyzer produces observables from
 identities. Social workflows are modules in the social_workflows package.
