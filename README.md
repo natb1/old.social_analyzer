@@ -35,22 +35,10 @@ Giving the social_workflow control over how the observable_workflow is
 invoked is a deliberate design choice.
 
 ## assumptions
+- Testing doesn't all work and generally not fully tested.
 - Non-blocking IO is interpreted to mean guaranteed parallelism during IO.
 This is enforced by using separate queues for IO bound tasks. A stricter
 interpretation of non-blocking IO might require tasks to yield the worker
 thread during IO.
-- Analysis only involves requesting existing vt reports for url's, not
-submitting requests to do new scans.
 - Rate limiting (and IO errors in general) are left unandled.
-
-## playbook
-- `git clone https://github.com/natb1/social_analyzer_infrastructure.git`
-- [provision chefdk](https://downloads.chef.io/chef-dk/)
-- deploy (locally):
-```
-berks vendor cookbooks -b social_analyzer_infrastructure/Berksfile
-sudo chef-client -z -o social_analyzer_infrastructure
-```
-- `cd /opt #TODO: deploy as package to fix path issues`
-- `nosetests --with-doctest --doctest-extension=md --doctest-fixtures=_fixt social_analyzer/tests/examples social_analyzer/tests/unit`
 

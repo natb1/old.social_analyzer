@@ -3,7 +3,6 @@ from __future__ import absolute_import
 from celery import group, chain
 
 import social_analyzer.tasks
-#TODO: import all social workflows
 import social_analyzer.social_workflows.twitter
 
 def init_twitter_workflow(screen_names):
