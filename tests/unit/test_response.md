@@ -5,7 +5,7 @@
 >>> observable = social_analyzer.model.Observable(value='evil.example.com',
 ...                                               attribution=identity)
 >>> with mock.patch('smtplib.SMTP') as MockSMTP:
-...     social_analyzer.tasks._respond(observable, 'nathan@natb1.com',
+...     social_analyzer.tasks.respond((observable, True), 'nathan@natb1.com',
 ...                                    'role@example.com', smtp_server)
 ...     MockSMTP.assert_called_once_with(smtp_server)
 ...     MockSMTP.return_value.quit.assert_called_once_with()

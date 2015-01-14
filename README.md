@@ -27,8 +27,6 @@ Social workflows extend the way social_analyzer produces observables from
 identities. Social workflows are modules in the social_workflows package.
 They must implement a celery task called `social_workflow`. For example:
 ```
-from __future__ import absolute_import
-
 from social_analyzer.celery import celery
 
 @celery.task
@@ -37,3 +35,12 @@ def social_workflow(identity, observable_workflow):
 ```
 where identity is an Identity, and observable_workflow is
 a celery task that must be invoked once for each Observable instance.
+
+## assumptions
+- Non-blocking IO is interpreted to mean guaranteed parallelism during IO.
+This is enforced by using separate queues for IO bound tasks. This assumes there
+is at least one worker per queue. A stricter
+interpretation of non-blocking IO might require tasks to yield the worker
+thread during IO. I don't think celery would be the right tool for that.
+- Analysis only involves requesting existing reports for url's, not
+submitting requests to do a new analysis.

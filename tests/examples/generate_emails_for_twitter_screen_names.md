@@ -3,6 +3,7 @@
 ['Nathan', 'GhengisKhan', 'drEvil', 'MotherTeresa']
 >>> import social_analyzer.workflows
 >>> social_analyzer.workflows.init_twitter_workflow(twitter_screen_names,
+...                                                 fake_vt_key,
 ...                                                 'nathan@natb1.com',
 ...                                                 'role@example.com',
 ...                                                 'smtp.example.com')

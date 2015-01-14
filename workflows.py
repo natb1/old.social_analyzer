@@ -6,11 +6,11 @@ import social_analyzer.tasks
 #TODO: import all social workflows
 import social_analyzer.social_workflows.twitter
 
-def init_twitter_workflow(screen_names, *smtp_args):
+def init_twitter_workflow(screen_names, vt_key, *smtp_args):
     social_wf = social_analyzer.social_workflows.twitter.social_workflow
     observable_wf = chain(
-        social_analyzer.tasks.analyze.s(),
-        social_analyzer.tasks.parse_analysis_and_respond.s(*smtp_args))
+        social_analyzer.tasks.analyze.s(vt_key),
+        social_analyzer.tasks.respond.s(*smtp_args))
     twitter_wf = group(
         social_wf.s(social_analyzer.model.Identity(twitter=sn), observable_wf)
         for sn in screen_names
