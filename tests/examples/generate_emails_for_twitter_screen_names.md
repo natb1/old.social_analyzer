@@ -2,11 +2,7 @@
 >>> twitter_screen_names
 ['Nathan', 'GhengisKhan', 'drEvil', 'MotherTeresa']
 >>> import social_analyzer.workflows
->>> social_analyzer.workflows.init_twitter_workflow(twitter_screen_names,
-...                                                 fake_vt_key,
-...                                                 'nathan@natb1.com',
-...                                                 'role@example.com',
-...                                                 'smtp.example.com')
+>>> social_analyzer.workflows.init_twitter_workflow(twitter_screen_names)
 Called smtplib.SMTP('localhost')
 Called smtp_connection.sendmail(
     'role@example.com',

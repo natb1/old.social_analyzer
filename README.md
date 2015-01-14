@@ -12,15 +12,9 @@ Given the following contraints:
 - must be distributable
 - all IO must be non-blocking
 
-## quickstart
-- `git clone https://github.com/natb1/social_analyzer_infrastructure.git`
-- [provision chefdk](https://downloads.chef.io/chef-dk/)
-- deploy (locally):
-```
-berks vendor cookbooks -b social_analyzer_infrastructure/Berksfile
-sudo chef-client -z -o social_analyzer_infrastructure
-```
-- `nosetests --with-doctest --doctest-extension=md --doctest-fixtures=_fixt /opt/social_analyzer/tests/examples`
+## config
+Integration tests require local load time config. Config parameters can be
+found in config.py.
 
 ## social workflows
 Social workflows extend the way social_analyzer produces observables from
@@ -31,16 +25,32 @@ from social_analyzer.celery import celery
 
 @celery.task
 def social_workflow(identity, observable_workflow):
-   rasie NotImplementedError()
+   ...
+   group(observable_workflow.s(o) for o in observables)()
 ```
 where identity is an Identity, and observable_workflow is
 a celery task that must be invoked once for each Observable instance.
 
+Giving the social_workflow control over how the observable_workflow is
+invoked is a deliberate design choice.
+
 ## assumptions
 - Non-blocking IO is interpreted to mean guaranteed parallelism during IO.
-This is enforced by using separate queues for IO bound tasks. This assumes there
-is at least one worker per queue. A stricter
+This is enforced by using separate queues for IO bound tasks. A stricter
 interpretation of non-blocking IO might require tasks to yield the worker
-thread during IO. I don't think celery would be the right tool for that.
-- Analysis only involves requesting existing reports for url's, not
-submitting requests to do a new analysis.
+thread during IO.
+- Analysis only involves requesting existing vt reports for url's, not
+submitting requests to do new scans.
+- Rate limiting (and IO errors in general) are left unandled.
+
+## playbook
+- `git clone https://github.com/natb1/social_analyzer_infrastructure.git`
+- [provision chefdk](https://downloads.chef.io/chef-dk/)
+- deploy (locally):
+```
+berks vendor cookbooks -b social_analyzer_infrastructure/Berksfile
+sudo chef-client -z -o social_analyzer_infrastructure
+```
+- `cd /opt #TODO: deploy as package to fix path issues`
+- `nosetests --with-doctest --doctest-extension=md --doctest-fixtures=_fixt social_analyzer/tests/examples social_analyzer/tests/unit`
+
